@@ -1,0 +1,20 @@
+{
+  "name": "docker-swarm-conformity-monkey",
+  "version": "1.0.0",
+  "description": "Checks Docker Swarm services for known problems and best practices and creates a list of issues to be cleaned up",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ESI Middleware Team <bl-uits-esi-sit@exchange.iu.edu>",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/indiana-university/docker-swarm-conformity-monkey.git"
+  },
+  "dependencies": {
+    "caporal": "git+https://github.com/jwbennet/Caporal.js.git",
+    "chalk": "2.4.1",
+    "dockerode": "2.5.7"
+  }
+}
