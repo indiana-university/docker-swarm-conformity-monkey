@@ -1,0 +1,27 @@
+# Node artifacts
+node
+node_modules
+logs
+*.log
+npm-debug.log*
+
+
+# Eclipse Metadata
+.project
+.classpath
+.settings
+
+# IntelliJ Metadata
+.idea
+*.iml
+
+# Visual Studio Code Metadata
+*.code-workspace
+
+# Generated artifacts
+*.pem
+*.conf
+*.cfg
+*_ssl
+docker-compose.yml
+build
