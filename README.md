@@ -39,12 +39,12 @@ docker container run -t --rm registry.docker.iu.edu/esimw/docker-swarm-conformit
 
 This Docker container will requires you to provide a connection to a Docker engine for it to work appropriately.  To do this on your local machine you would simply provide a handle to the Docker socket to the container like so:
 
-```
+```sh
 docker container run -t --rm -v /var/run/docker.sock:/var/run/docker.sock registry.docker.iu.edu/esimw/docker-swarm-conformity-monkey
 ```
 
 If you wish to orchestrate checking services on a remote Docker engine you will need to provide `DOCKER_HOST` and `DOCKER_CERT_PATH` environment variables.  The `DOCKER_HOST` environment variable points to the URL for the remote Docker engine (e.g. `tcp://ucp-test.docker.iu.edu:443`) and the `DOCKER_CERT_PATH` environment variable points to a mounted directory containing SSL certificate used for authentication.  For deploying to the Universal Control Plane (UCP) the `DOCKER_CERT_PATH` would point to your UCP client bundle.  For example:
 
-```
+```sh
 docker run -t --rm -v /path/to/ucp-bundle:/ucp -e DOCKER_CERT_PATH=/ucp -e DOCKER_HOST=tcp://ucp-test.docker.iu.edu:443 registry.docker.iu.edu/esimw/docker-swarm-conformity-monkey
 ```
