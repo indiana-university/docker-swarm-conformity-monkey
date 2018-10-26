@@ -21,4 +21,30 @@ The following describes the checks that are performed by this script.  The summa
 
 ## Running the script
 
-When executed the script takes an optional argument which is the name of a single service to check.  If no arguments are provided it will instead check every service it can find.  By default it will only log a summary of each service along with details of the checks that have warnings or failures.  The verbose option (`-v` or `--verbose`) may be provided and the script will log details about each check that succeeds for each service.  The quiet option (`--quiet`) will only log information for services that have failures.  If there are any errors it will exit with an exit code of "1" so the script can be used to fail a build plan.
+The simplest way to use this command is to run it as a Docker container:
+
+```sh
+docker container run -t --rm registry.docker.iu.edu/esimw/docker-swarm-conformity-monkey
+```
+
+There are a few flags set there.  The `-t` flag allocates a pseudo-tty which will allow the colored text to come through and can be removed when running this in CI.  The `--rm` flag will cause this container to be removed when the command exits and could be removed if you want to retain the container to view its logs afterwards.
+
+When the script is executed it takes an optional argument which is the name of a single service to check.  If no arguments are provided it will instead check every service it can find.  By default it will only log a summary of each service along with details of the checks that have warnings or failures.  The verbose option (`-v` or `--verbose`) may be provided and the script will log details about each check that succeeds for each service.  The quiet option (`--quiet`) will only log information for services that have failures.  If there are any errors it will exit with an exit code of "1" so the script can be used to fail a build plan.  More help can be found by running the "help" command:
+
+```sh
+docker container run -t --rm registry.docker.iu.edu/esimw/docker-swarm-conformity-monkey help
+```
+
+### Connecting to the Docker Engine
+
+This Docker container will requires you to provide a connection to a Docker engine for it to work appropriately.  To do this on your local machine you would simply provide a handle to the Docker socket to the container like so:
+
+```
+docker container run -t --rm -v /var/run/docker.sock:/var/run/docker.sock registry.docker.iu.edu/esimw/docker-swarm-conformity-monkey
+```
+
+If you wish to orchestrate checking services on a remote Docker engine you will need to provide `DOCKER_HOST` and `DOCKER_CERT_PATH` environment variables.  The `DOCKER_HOST` environment variable points to the URL for the remote Docker engine (e.g. `tcp://ucp-test.docker.iu.edu:443`) and the `DOCKER_CERT_PATH` environment variable points to a mounted directory containing SSL certificate used for authentication.  For deploying to the Universal Control Plane (UCP) the `DOCKER_CERT_PATH` would point to your UCP client bundle.  For example:
+
+```
+docker run -t --rm -v /path/to/ucp-bundle:/ucp -e DOCKER_CERT_PATH=/ucp -e DOCKER_HOST=tcp://ucp-test.docker.iu.edu:443 registry.docker.iu.edu/esimw/docker-swarm-conformity-monkey
+```
