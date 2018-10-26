@@ -4,6 +4,7 @@
   "description": "Checks Docker Swarm services for known problems and best practices and creates a list of issues to be cleaned up",
   "main": "src/index.js",
   "scripts": {
+    "license": "license-check-and-add",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "ESI Middleware Team <bl-uits-esi-sit@exchange.iu.edu>",
@@ -16,5 +17,17 @@
     "caporal": "git+https://github.com/jwbennet/Caporal.js.git",
     "chalk": "2.4.1",
     "dockerode": "2.5.7"
-  }
+  },
+  "devDependencies": {
+    "license-check-and-add": "2.3.6"
+  },
+  "license-check-and-add-config": {
+    "folder": ".",
+    "license": "LICENSE.md",
+    "exact_paths_method": "INCLUDE",
+    "exact_paths": ["src"],
+    "file_type_method": "INCLUDE",
+    "file_types": [".js"],
+    "insert_license": true
+}
 }
