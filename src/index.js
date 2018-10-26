@@ -51,7 +51,7 @@ process.on('unhandledRejection', (err) => {
 
 const check = async ({ serviceName }, options) => {
   let errorCount = 0;
-  if(serviceName) {
+  if(serviceName && serviceName !== 'all') {
     const service = await dockerClient.getService(serviceName).inspect();
     errorCount = await checkService(service, options);
   } else {
@@ -91,9 +91,9 @@ const checkAllServices = async (options) => {
     errorCount += await checkService(service, options);
   }
   if(errorCount > 0) {
-    logger.warn(`\n${errorCount} errors found across all services`);
+    logger.warn(`\n${errorCount} failures found across all services`);
   } else {
-    logger.info('\nNo errors found in any service');
+    logger.info('\nNo failures found in any service');
   }
   return errorCount;
 };
