@@ -50,12 +50,14 @@ process.on('unhandledRejection', (err) => {
 });
 
 const check = async ({ serviceName }, options) => {
+  let errorCount = 0;
   if(serviceName) {
     const service = await dockerClient.getService(serviceName).inspect();
-    process.exit(await checkService(service, options));
+    errorCount = await checkService(service, options);
   } else {
-    process.exit(await checkAllServices(options));
+    errorCount = await checkAllServices(options);
   }
+  process.exit(errorCount > 0 ? 1 : 0);
 };
 
 const checkService = async (service, options) => {
